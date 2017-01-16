@@ -1,4 +1,4 @@
-#include "menu.h"
+//#include "menu.h"
 int init_snake() {
 	return 0;
 }
