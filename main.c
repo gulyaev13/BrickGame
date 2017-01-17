@@ -3,13 +3,14 @@
 #include <stdio.h>
 #include <time.h>
 #include "menu.h"
+#include "game.h"
 #include "app_window.h"
 
 void delay(size_t mils);
 int main(int argc, char* args[]) {
 	int* area = NULL;
 	size_t row, colomn, i;
-	menu mainmenu;
+	//menu mainmenu;
 	if (init_gui()) {
 		printf("SDL_Error: %s\n", SDL_GetError());
 		exit(1);
@@ -24,13 +25,15 @@ int main(int argc, char* args[]) {
 	}
 	create_gui();
 
-	init_menu(&mainmenu);
+	if (init_menu()) {
+		printf("Problem with menu!\n");
+		exit(4);
+	};
 
-	choose_menu_item(&mainmenu);
-
-	render(mainmenu.menuelement[mainmenu.choice].menu_image);
-
+	choose_menu_item();
+	
 	delay(1000);
+	game_play();
 
 	for (i = 0; i < 50; ++i) {
 		printf("%lu\n", i);
@@ -39,7 +42,7 @@ int main(int argc, char* args[]) {
 				area[row * PLAYGROUND_COLOMNS + colomn] = (row + colomn + i) % 3;
 			}
 		}
-		render(area);
+		render(area, NULL);
 		delay(100);
 	}
 

@@ -1,6 +1,6 @@
 #pragma once
 #ifndef DUCK_H_INCLUDED
-#define DUCKE_H_INCLUDED
+#define DUCK_H_INCLUDED
 const int menu_image_duck[200] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 1, 1, 1, 0, 0, 0,
@@ -24,8 +24,8 @@ const int menu_image_duck[200] = {
 	1, 0, 0, 1, 1, 1, 1, 0, 0, 1
 };
 
-int init_duck();
+int init_duck(int** area, int** info_blocs);
 
-int next_step_duck();
+int next_step_duck(int* const area, int* info_blocs);
 #endif
 
