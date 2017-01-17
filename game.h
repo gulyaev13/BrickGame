@@ -3,5 +3,5 @@
 #define GAME_H_INCLUDED
 void game_play();
 
-void free_area();
+void free_areas();
 #endif

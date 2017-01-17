@@ -11,6 +11,7 @@ static int* info_blocs = NULL;
 
 static void animation(game_state_t state) {
 	int row, colomn;
+	free(area);
 	area = (int*)calloc(PLAYGROUND_COLOMNS * PLAYGROUND_ROWS, sizeof(int));
 	if(state) set_game_over_text(TEXT_SHOW_ON);
 	for (row = PLAYGROUND_ROWS - 1; row >= 0; --row) {
@@ -55,7 +56,7 @@ void game_play() {
 	animation(GAME_OVER);
 }
 
-void free_area() {
+void free_areas() {
 	free(area);
 	free(info_blocs);
 }

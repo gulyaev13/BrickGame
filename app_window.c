@@ -286,5 +286,5 @@ void destroy_gui() {
 	SDL_DestroyWindow(window);
 	TTF_Quit();
 	SDL_Quit();
-	free_area();
+	free_areas();
 }
