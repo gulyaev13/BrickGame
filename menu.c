@@ -14,14 +14,14 @@
 
 //static SDL_Event event;
 
-static void add_menu_item(menu* menu, const int* menu_image, int(*init)(), int(*next_step)()) {
+static void add_menu_item(menu* menu, const int* menu_image, int hi_score, int(*init)(), int(*next_step)()) {
 	int working = 1;
 	while (working) {
 		if (menu->count + 1 <= menu->capacity) {
 			menu->menuelement[menu->count].init = init;
 			menu->menuelement[menu->count].next_step = next_step;
 			menu->menuelement[menu->count].menu_image = menu_image;
-			//memcpy(menu->menuelement[menu->count].menu_image, menu_image, 400 * sizeof(int));
+			menu->menuelement[menu->count].hi_score = hi_score;
 			menu->count++;
 			working = 0;
 		}
@@ -42,8 +42,8 @@ int init_menu(menu* menu) {
 	menu->choice = 0;
 	menu->speed = 0;
 	menu->menuelement = (menuelement*)malloc(sizeof(menuelement) * 2);
-	add_menu_item(menu, menu_image_snake, init_snake, next_step_snake);
-	add_menu_item(menu, menu_image_duck, init_duck, next_step_duck);
+	add_menu_item(menu, menu_image_snake, 0, init_snake, next_step_snake);
+	add_menu_item(menu, menu_image_duck, 777, init_duck, next_step_duck);
 	//printf("init_menu ok\n");
 	return INIT_MENU_OK;
 }
@@ -59,17 +59,21 @@ void choose_menu_item(menu* menu) {
 				switch (event.key.keysym.sym) {
 				case SDLK_DOWN:
 					menu->speed = (menu->speed - 1) < MIN_SPEED ? MAX_SPEED : (menu->speed - 1);
-					printf("Speed: %d\n", menu->speed);
+					set_speed_num(menu->speed);
+					//printf("Speed: %d\n", menu->speed);
 					break;
 				case SDLK_UP:
 					menu->speed = (menu->speed + 1) > MAX_SPEED ? MIN_SPEED : (menu->speed + 1);
-					printf("Speed: %d\n", menu->speed);
+					set_speed_num(menu->speed);
+					//printf("Speed: %d\n", menu->speed);
 					break;
 				case SDLK_RIGHT:
 					menu->choice = (menu->choice + 1) > (menu->count - 1) ? 0 : (menu->choice + 1);
+					set_hi_score_num(menu->menuelement[menu->choice].hi_score);
 					break;
 				case SDLK_LEFT:
 					menu->choice = (menu->choice - 1) < 0 ? menu->count - 1 : (menu->choice - 1);
+					set_hi_score_num(menu->menuelement[menu->choice].hi_score);
 					break;
 				case SDLK_RETURN:
 					working = 0;

@@ -7,7 +7,8 @@ typedef enum {
 	INIT_MENU_ERROR
 } menu_init_code;
 typedef struct menuelement {
-	int* menu_image;
+	const int* menu_image;
+	int hi_score;
 	int(*init)();
 	int(*next_step)();
 	/*return score or -1 if gameover*/

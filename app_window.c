@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "app_window.h"
 #include "SDL.h"
 #include "SDL_ttf.h"
@@ -26,9 +27,10 @@ static const SDL_Color empty_text_color = { 0x61,0x70,0x5B,0 };/*color same empt
 #define FONT_PATH "C:/Windows/Fonts/ARIALNB.ttf"
 
 static const int SCREEN_WIDTH = 640;
-static const int SCREEN_HEIGHT = 5 * BORDER +BRICK_SIZE_WITH_BORDER * PLAYGROUND_ROWS;
+static const int SCREEN_HEIGHT = 5 * BORDER + BRICK_SIZE_WITH_BORDER * PLAYGROUND_ROWS;
 static SDL_Window* window = NULL;
 static SDL_Surface* screenSurface = NULL;
+/*Text block's coordinates*/
 static const SDL_Rect hi_score_num_dest = {
 	INFO_AREA_X + BORDER /*+ BRICK_SIZE_WITH_BORDER*/,
 	3 * BORDER + BRICK_SIZE_WITH_BORDER,
@@ -79,6 +81,27 @@ static void print_ttf(SDL_Surface *sDest, char* message, char* font, int size, S
 	SDL_FreeSurface(sText);
 	TTF_CloseFont(fnt);
 }
+/*set functions*/
+void set_hi_score_num(int hi_score) {
+	char const hi_score_text[7];
+	sprintf(hi_score_text, "%d", hi_score);
+	SDL_FillRect(screenSurface, &hi_score_num_dest, BACKGROUND_COLOR);
+	print_ttf(screenSurface, hi_score_text, FONT_PATH, FONT_SIZE, text_color, hi_score_num_dest);
+}
+void set_score_num(int score) {
+	char* const score_text[7];
+	sprintf(score_text, "%d", score);
+	SDL_FillRect(screenSurface, &score_num_dest, BACKGROUND_COLOR);
+	print_ttf(screenSurface, score_text, FONT_PATH, FONT_SIZE, text_color, score_num_dest);
+}
+
+void set_speed_num(int speed) {
+	char const speed_text[7];
+	sprintf(speed_text, "%d", speed);
+	SDL_FillRect(screenSurface, &speed_num_dest, BACKGROUND_COLOR);
+	print_ttf(screenSurface, speed_text, FONT_PATH, FONT_SIZE, text_color, speed_num_dest);
+}
+
 void set_pause_text(SDL_Color color) {
 	print_ttf(screenSurface, "Pause", FONT_PATH, FONT_SIZE, color, pause_text_dest);
 }
@@ -86,6 +109,8 @@ void set_game_over_text(SDL_Color color) {
 	print_ttf(screenSurface, "GAME", FONT_PATH, FONT_SIZE, color, game_text_dest);
 	print_ttf(screenSurface, "OVER", FONT_PATH, FONT_SIZE, color, over_text_dest);
 }
+
+
 static void create_text() {
 	SDL_Rect dest;
 	/*Hi-Score label*/
@@ -95,7 +120,7 @@ static void create_text() {
 	dest.h = BRICK_SIZE_WITH_BORDER;
 	print_ttf(screenSurface, "Hi-Score", FONT_PATH, FONT_SIZE, text_color, dest);
 	/*Hi-Score number*/
-	print_ttf(screenSurface, "0", FONT_PATH, FONT_SIZE, text_color, hi_score_num_dest);
+	set_hi_score_num(0);
 	/*Score label*/
 	dest.x = INFO_AREA_X /*+ BRICK_SIZE_WITH_BORDER*/;
 	dest.y = 3 * BORDER + 2 * BRICK_SIZE_WITH_BORDER;
@@ -103,7 +128,7 @@ static void create_text() {
 	dest.h = BRICK_SIZE_WITH_BORDER;
 	print_ttf(screenSurface, "Score", FONT_PATH, FONT_SIZE, text_color, dest);
 	/*Score number*/
-	print_ttf(screenSurface, "0", FONT_PATH, FONT_SIZE, text_color, score_num_dest);
+	set_score_num(0);
 	/*Speed label*/
 	dest.x = INFO_AREA_X /*+ BRICK_SIZE_WITH_BORDER*/;
 	dest.y = 3 * BORDER + 11 * BRICK_SIZE_WITH_BORDER;
@@ -111,7 +136,8 @@ static void create_text() {
 	dest.h = BRICK_SIZE_WITH_BORDER;
 	print_ttf(screenSurface, "Speed", FONT_PATH, FONT_SIZE, text_color, dest);
 	/*Speed number*/
-	print_ttf(screenSurface, "0", FONT_PATH, FONT_SIZE, text_color, speed_num_dest);
+	set_speed_num(0);
+	//print_ttf(screenSurface, "0", FONT_PATH, FONT_SIZE, text_color, speed_num_dest);
 	/*Pause*/
 	set_pause_text(empty_text_color);
 	/*Game over*/
@@ -144,7 +170,6 @@ int create_gui() {
 	SDL_UpdateWindowSurface(window);
 	return 0;
 }
-
 
 static void fill_playgraund(const int* const area) {
 	int count = 0, row, colomn;
