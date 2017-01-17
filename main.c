@@ -1,4 +1,5 @@
 #include "SDL.h"
+#include "SDL_ttf.h"
 #include <stdio.h>
 #include <time.h>
 #include "menu.h"
@@ -13,9 +14,13 @@ int main(int argc, char* args[]) {
 		printf("SDL_Error: %s\n", SDL_GetError());
 		exit(1);
 	}
+	if (TTF_Init()) {
+		printf("TTF_Init: %s\n", TTF_GetError());
+		exit(2);
+	}
 	if ((area = (int*)malloc(sizeof(int) * 200)) == NULL) {
 		printf("Playground array not created!\n");
-		exit(2);
+		exit(3);
 	}
 	create_gui();
 
