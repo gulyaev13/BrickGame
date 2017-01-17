@@ -60,12 +60,10 @@ void choose_menu_item(menu* menu) {
 				case SDLK_DOWN:
 					menu->speed = (menu->speed - 1) < MIN_SPEED ? MAX_SPEED : (menu->speed - 1);
 					set_speed_num(menu->speed);
-					//printf("Speed: %d\n", menu->speed);
 					break;
 				case SDLK_UP:
 					menu->speed = (menu->speed + 1) > MAX_SPEED ? MIN_SPEED : (menu->speed + 1);
 					set_speed_num(menu->speed);
-					//printf("Speed: %d\n", menu->speed);
 					break;
 				case SDLK_RIGHT:
 					menu->choice = (menu->choice + 1) > (menu->count - 1) ? 0 : (menu->choice + 1);

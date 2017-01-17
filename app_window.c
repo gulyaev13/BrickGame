@@ -83,23 +83,26 @@ static void print_ttf(SDL_Surface *sDest, char* message, char* font, int size, S
 }
 /*set functions*/
 void set_hi_score_num(int hi_score) {
-	char const hi_score_text[7];
+	char* const hi_score_text = (char*)malloc(7 * sizeof(char));
 	sprintf(hi_score_text, "%d", hi_score);
 	SDL_FillRect(screenSurface, &hi_score_num_dest, BACKGROUND_COLOR);
 	print_ttf(screenSurface, hi_score_text, FONT_PATH, FONT_SIZE, text_color, hi_score_num_dest);
+	free(hi_score_text);
 }
 void set_score_num(int score) {
-	char* const score_text[7];
+	char* const score_text = (char*)malloc(7 * sizeof(char));
 	sprintf(score_text, "%d", score);
 	SDL_FillRect(screenSurface, &score_num_dest, BACKGROUND_COLOR);
 	print_ttf(screenSurface, score_text, FONT_PATH, FONT_SIZE, text_color, score_num_dest);
+	free(score_text);
 }
 
 void set_speed_num(int speed) {
-	char const speed_text[7];
+	char* const speed_text = (char*)malloc(7 * sizeof(char));
 	sprintf(speed_text, "%d", speed);
 	SDL_FillRect(screenSurface, &speed_num_dest, BACKGROUND_COLOR);
 	print_ttf(screenSurface, speed_text, FONT_PATH, FONT_SIZE, text_color, speed_num_dest);
+	free(speed_text);
 }
 
 void set_pause_text(SDL_Color color) {
