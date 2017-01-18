@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "app_window.h"
 #include "menu.h"
+
+#define SPEED_FACTOR 35
+
 typedef enum {
 	GAME_START = 0,
 	GAME_OVER = -1
@@ -83,12 +86,13 @@ int game_play() {
 	SDL_Event event;
 	int working = 1;
 	int score;
+	set_info_text(GAME_TEXT);
 	animation(GAME_START);
 	init_game(&area, &info_blocs);
 	render(area, info_blocs);
 	pre_game_pause();
 	do {
-		if (SDL_WaitEventTimeout(&event, 450)) {
+		if (SDL_WaitEventTimeout(&event, 450 - SPEED_FACTOR * get_speed())) {
 			switch (event.type) {
 			case SDL_QUIT:
 				working = 0;
@@ -127,10 +131,11 @@ int game_play() {
 			pre_game_pause();
 		}
 		else {
-			set_score_num(0);
 			working = -1;
 		}
+		if (working < 0) set_score_num(0); 
 	} while (working > 0);
 	animation(GAME_OVER);
+	set_info_text(MENU_TEXT);
 	return working;
 }

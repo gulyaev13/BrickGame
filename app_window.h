@@ -19,6 +19,11 @@ typedef enum text_show_t {
 	TEXT_SHOW_ON
 } text_show_t;
 
+typedef enum {
+	GAME_TEXT = 0,
+	MENU_TEXT
+} info_text_state_t;
+
 int init_gui();
 
 int create_gui();
@@ -38,4 +43,6 @@ void set_speed_num(int speed);
 void set_pause_text(text_show_t text_show);
 
 void set_game_over_text(text_show_t text_show);
+
+void set_info_text(info_text_state_t info_text_state);
 #endif

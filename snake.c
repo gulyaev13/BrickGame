@@ -5,6 +5,7 @@
 
 #define CHERRY -1
 #define CHERRY_ADD_SPEED 20
+#define MAX_CHERRY_COUNT 2
 
 typedef struct {
 	int x;
@@ -24,7 +25,7 @@ static int lives;
 static int snake_length;
 static int score;
 static int cherry_interval;
-
+static int cherry_count;
 static update_lives(int* const info_blocs) {
 	int row;
 	for (row = INFO_BLOCKS_COUNT - 1; row >= 0; --row) {
@@ -34,17 +35,19 @@ static update_lives(int* const info_blocs) {
 
 static void create_cherry(int* area) {
 	int rand_value, row, colomn, count = 0;
-	srand((unsigned int)time(NULL));
-	rand_value = rand() % (PLAYGROUND_COLOMNS * PLAYGROUND_ROWS - snake_length);
-	for (row = 0; row < PLAYGROUND_ROWS; ++row) {
-		for (colomn = 0; colomn < PLAYGROUND_COLOMNS; ++colomn) {
-			if (!(area[row * PLAYGROUND_COLOMNS + colomn])) {
-				count++;
-				if(count == rand_value) area[row * PLAYGROUND_COLOMNS + colomn] = CHERRY;
+	if (cherry_count < MAX_CHERRY_COUNT) {
+		srand((unsigned int)time(NULL));
+		rand_value = rand() % (PLAYGROUND_COLOMNS * PLAYGROUND_ROWS - snake_length);
+		for (row = 0; row < PLAYGROUND_ROWS; ++row) {
+			for (colomn = 0; colomn < PLAYGROUND_COLOMNS; ++colomn) {
+				if (!(area[row * PLAYGROUND_COLOMNS + colomn])) {
+					count++;
+					if (count == rand_value) area[row * PLAYGROUND_COLOMNS + colomn] = CHERRY;
+				}
 			}
 		}
+		cherry_count++;
 	}
-
 }
 
 static coordinates_t coordinates_sum(coordinates_t a, coordinates_t b) {
@@ -106,6 +109,7 @@ static void re_init_snake(int lives_num, int* const area, int* const info_blocs)
 		}
 	}
 	cherry_interval = 0;
+	cherry_count = 0;
 	lives = lives_num;
 	snake_length = 5;
 	score = 0;
@@ -156,10 +160,11 @@ int next_step_snake(int* const area, int* const info_blocs, const SDL_Keycode* c
 	}
 	if (step_state == STEP_TRUE) {
 		move_snake(area);
-		score += 10 + 10 * get_speed();
+		score += 5 + 1 * get_speed();
 	}
 	if (step_state == EAT_CHERRY) {
-		score += 100 + 100 * get_speed();
+		score += 100 + 50 * get_speed();
+		cherry_count--;
 		create_cherry(area);
 		cherry_interval = 0;
 	}
