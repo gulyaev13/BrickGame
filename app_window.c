@@ -163,6 +163,7 @@ void set_hi_score_num(int hi_score) {
 	SDL_FillRect(screenSurface, &hi_score_num_dest, BACKGROUND_COLOR);
 	print_ttf(screenSurface, hi_score_text, FONT_PATH, FONT_SIZE, text_color, hi_score_num_dest);
 	free(hi_score_text);
+	SDL_UpdateWindowSurface(window);
 }
 void set_score_num(int score) {
 	char* const score_text = (char*)malloc(7 * sizeof(char));
@@ -170,6 +171,7 @@ void set_score_num(int score) {
 	SDL_FillRect(screenSurface, &score_num_dest, BACKGROUND_COLOR);
 	print_ttf(screenSurface, score_text, FONT_PATH, FONT_SIZE, text_color, score_num_dest);
 	free(score_text);
+	SDL_UpdateWindowSurface(window);
 }
 
 void set_speed_num(int speed) {
@@ -178,6 +180,7 @@ void set_speed_num(int speed) {
 	SDL_FillRect(screenSurface, &speed_num_dest, BACKGROUND_COLOR);
 	print_ttf(screenSurface, speed_text, FONT_PATH, FONT_SIZE, text_color, speed_num_dest);
 	free(speed_text);
+	SDL_UpdateWindowSurface(window);
 }
 
 void set_pause_text(text_show_t text_show) {
@@ -190,6 +193,7 @@ void set_pause_text(text_show_t text_show) {
 	}
 	SDL_FillRect(screenSurface, &pause_text_dest, BACKGROUND_COLOR);
 	print_ttf(screenSurface, "Pause", FONT_PATH, FONT_SIZE, color, pause_text_dest);
+	SDL_UpdateWindowSurface(window);
 }
 void set_game_over_text(text_show_t text_show) {
 	SDL_Color color;
@@ -203,6 +207,7 @@ void set_game_over_text(text_show_t text_show) {
 	SDL_FillRect(screenSurface, &over_text_dest, BACKGROUND_COLOR);
 	print_ttf(screenSurface, "GAME", FONT_PATH, FONT_SIZE, color, game_text_dest);
 	print_ttf(screenSurface, "OVER", FONT_PATH, FONT_SIZE, color, over_text_dest);
+	SDL_UpdateWindowSurface(window);
 }
 
 static void create_text() {

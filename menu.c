@@ -12,10 +12,11 @@
 
 #define MAX_SPEED 9
 #define MIN_SPEED 0
+#define MAX_HI_SCORE 999999
 
 static menu_t menu;
 
-static void add_menu_item(const int* menu_image, int hi_score, int(*init)(int**, int**), int(*next_step)(int* const, int* const)) {
+static void add_menu_item(const int* menu_image, int hi_score, int(*init)(int**, int**), int(*next_step)(int* const, int* const, const SDL_Keycode* const)) {
 	int working = 1;
 	while (working) {
 		if (menu.count + 1 <= menu.capacity) {
@@ -90,5 +91,24 @@ int init_game(int** area, int** info_blocs) {
 	return menu.menuelement[menu.choice].init(area, info_blocs);
 }
 
+int game_next_step(int* const area, int* const info_blocs, const SDL_Keycode* const key_code) {
+	return menu.menuelement[menu.choice].next_step(area, info_blocs, key_code);
+}
+
+int get_speed() {
+	return menu.speed;
+}
+
+void set_speed(int new_speed) {
+	menu.speed = (new_speed > MAX_SPEED) ? MAX_SPEED : (new_speed < MIN_SPEED ? MIN_SPEED : new_speed);
+}
+
+int get_hi_score() {
+	return menu.menuelement[menu.choice].hi_score;
+}
+
+void set_hi_score(int new_hi_score) {
+	menu.menuelement[menu.choice].hi_score = new_hi_score > MAX_HI_SCORE ? MAX_HI_SCORE : new_hi_score;
+}
 
 

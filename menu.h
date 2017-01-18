@@ -10,7 +10,7 @@ typedef struct menuelement_t {
 	const int* menu_image;
 	int hi_score;
 	int(*init)(int**, int**);
-	int(*next_step)(int* const, int* const);
+	int(*next_step)(int* const, int* const, const SDL_Keycode* const);
 	/*return score or -1 if gameover*/
 } menuelement_t;
 
@@ -28,4 +28,13 @@ void choose_menu_item();
 
 int init_game(int** area, int** info_blocs);
 
+int game_next_step(int* const area, int* const info_blocs, const SDL_Keycode* const key_code);
+
+int get_speed();
+
+void set_speed(int new_speed);
+
+int get_hi_score();
+
+void set_hi_score(int new_hi_score);
 #endif

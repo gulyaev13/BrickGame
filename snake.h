@@ -26,5 +26,5 @@ const int menu_image_snake[200] = {
 
 int init_snake(int** area, int** info_blocs);
 
-int next_step_snake(int* const area, int* const info_blocs);
+int next_step_snake(int* const area, int* const info_blocs, const SDL_Keycode* const key_code);
 #endif

@@ -9,10 +9,18 @@ typedef enum {
 static int* area = NULL;
 static int* info_blocs = NULL;
 
+void free_areas() {
+	free(area);
+	free(info_blocs);
+	area = NULL;
+	info_blocs = NULL;
+}
 static void animation(game_state_t state) {
 	int row, colomn;
-	free(area);
+	free_areas();
 	area = (int*)calloc(PLAYGROUND_COLOMNS * PLAYGROUND_ROWS, sizeof(int));
+	info_blocs = (int*)calloc(INFO_BLOCKS_COUNT * INFO_BLOCKS_COUNT, sizeof(int));
+	render(area, info_blocs);
 	if(state) set_game_over_text(TEXT_SHOW_ON);
 	for (row = PLAYGROUND_ROWS - 1; row >= 0; --row) {
 		for (colomn = 0; colomn < PLAYGROUND_COLOMNS; ++colomn) {
@@ -29,16 +37,12 @@ static void animation(game_state_t state) {
 		SDL_Delay(80);
 	}
 	if (state) set_game_over_text(TEXT_SHOW_OFF);
-	free(area);
-	area = NULL;
+	free_areas();
 }
 
-void game_play() {
+static void pre_game_pause() {
 	SDL_Event event;
 	int working = 1;
-	animation(GAME_START);
-	init_game(&area, &info_blocs);
-	render(area, info_blocs);
 	while (working) {
 		SDL_WaitEvent(&event);
 		switch (event.type) {
@@ -51,10 +55,82 @@ void game_play() {
 			break;
 		}
 	}
-	animation(GAME_OVER);
 }
 
-void free_areas() {
-	free(area);
-	free(info_blocs);
+static void game_pause() {
+	SDL_Event event;
+	int working = 1;
+	set_pause_text(TEXT_SHOW_ON);
+	while (working) {
+		SDL_WaitEvent(&event);
+		switch (event.type) {
+		case SDL_QUIT:
+			destroy_gui();
+			exit(0);
+			break;
+		case SDL_KEYDOWN:
+			switch (event.key.keysym.sym){
+			case SDLK_RETURN:
+				working = 0;
+				break;
+			}
+		}
+	}
+	set_pause_text(TEXT_SHOW_OFF);
+}
+
+int game_play() {
+	SDL_Event event;
+	int working = 1;
+	int score;
+	animation(GAME_START);
+	init_game(&area, &info_blocs);
+	render(area, info_blocs);
+	pre_game_pause();
+	do {
+		if (SDL_WaitEventTimeout(&event, 450)) {
+			switch (event.type) {
+			case SDL_QUIT:
+				working = 0;
+				//destroy_gui();
+				//exit(0);
+				break;
+			case SDL_KEYDOWN:
+				switch (event.key.keysym.sym) {
+				case SDLK_RETURN:
+					game_pause();
+					break;
+				case SDLK_ESCAPE:
+					working = -1;
+					break;
+				default:
+					score = game_next_step(area, info_blocs, &(event.key.keysym.sym));
+					break;
+				}
+			}
+		}
+		else {
+			score = game_next_step(area, info_blocs, NULL);
+		}
+		if (!working) break;
+		render(area, info_blocs);
+		if (score > 0) {
+			set_score_num(score);
+			if (score > get_hi_score()) {
+				set_hi_score(score);
+				set_hi_score_num(score);
+			}
+			
+		} 
+		else if (score == 0) {
+			set_score_num(score);
+			pre_game_pause();
+		}
+		else {
+			set_score_num(0);
+			working = -1;
+		}
+	} while (working > 0);
+	animation(GAME_OVER);
+	return working;
 }

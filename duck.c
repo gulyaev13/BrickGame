@@ -5,6 +5,6 @@ int init_duck(int** area, int** info_blocs) {
 	return 0;
 }
 
-int next_step_duck(int* const area, int* const info_blocs) {
-	return 0;
+int next_step_duck(int* const area, int* const info_blocs, const SDL_Keycode* const key_code) {
+	return -1;
 }
