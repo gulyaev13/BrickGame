@@ -81,8 +81,6 @@ void choose_menu_item() {
 				destroy_gui();
 				exit(0);
 				break;
-			default:
-				break;
 			}
 			render(menu.menuelement[menu.choice].menu_image, NULL);
 	}

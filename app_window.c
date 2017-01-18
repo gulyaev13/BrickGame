@@ -205,7 +205,6 @@ void set_game_over_text(text_show_t text_show) {
 	print_ttf(screenSurface, "OVER", FONT_PATH, FONT_SIZE, color, over_text_dest);
 }
 
-
 static void create_text() {
 	SDL_Rect dest;
 	/*Hi-Score label*/
@@ -237,12 +236,22 @@ static void create_text() {
 	/*Game over*/
 	set_game_over_text(TEXT_SHOW_OFF);
 }
+
+int is_event_correct(void* userdata, SDL_Event* event) {
+	if (event != NULL) {
+		if (event->type == SDL_KEYDOWN || event->type == SDL_QUIT) return 1;
+		if (event->type == SDL_WINDOWEVENT && event->window.event == SDL_WINDOWEVENT_RESTORED) return 1;
+	}
+	return 0;
+}
+
 int init_gui() {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) return SDL_INIT_ERROR;
 	window = SDL_CreateWindow("Brick Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (window == NULL) return SDL_CREATE_WINDOW_ERROR;
 	screenSurface = SDL_GetWindowSurface(window);
 	if (screenSurface == NULL) return SDL_GET_SURFACE_ERROR;
+	SDL_SetEventFilter(is_event_correct, NULL);
 	return SDL_INIT_EVERYTHING_OK;
 }
 
