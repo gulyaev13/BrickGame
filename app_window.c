@@ -239,7 +239,27 @@ static void create_text() {
 
 int is_event_correct(void* userdata, SDL_Event* event) {
 	if (event != NULL) {
-		if (event->type == SDL_KEYDOWN || event->type == SDL_QUIT) return 1;
+		if (event->type == SDL_KEYDOWN) {
+			switch (event->key.keysym.sym) {
+			case SDLK_DOWN:
+				return 1;
+			case SDLK_UP:
+				return 1;
+			case SDLK_RIGHT:
+				return 1;
+			case SDLK_LEFT:
+				return 1;
+			case SDLK_RETURN:
+				return 1;
+			case SDLK_ESCAPE:
+				return 1;
+			case SDLK_SPACE:
+				return 1;
+			default:
+				return 0;
+			}
+		}
+		if (event->type == SDL_QUIT) return 1;
 		if (event->type == SDL_WINDOWEVENT && event->window.event == SDL_WINDOWEVENT_RESTORED) return 1;
 	}
 	return 0;

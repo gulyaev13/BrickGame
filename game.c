@@ -49,8 +49,6 @@ void game_play() {
 		case SDL_KEYDOWN:
 			working = 0;
 			break;
-		default:
-			break;
 		}
 	}
 	animation(GAME_OVER);
