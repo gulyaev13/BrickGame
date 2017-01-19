@@ -1,16 +1,12 @@
 #include "app_window.h"
 #include "menu.h"
+#include "structs.h"
 #include <stdlib.h>
 #include <time.h>
 
 #define CHERRY -1
 #define CHERRY_ADD_SPEED 20
 #define MAX_CHERRY_COUNT 2
-
-typedef struct {
-	int x;
-	int y;
-} coordinates_t;
 
 typedef enum {
 	STEP_FAILED = 0,
@@ -33,7 +29,7 @@ static update_lives(int* const info_blocs) {
 	}
 }
 
-static void create_cherry(int* area) {
+static void create_cherry(int* const area) {
 	int rand_value, row, colomn, count = 0;
 	if (cherry_count < MAX_CHERRY_COUNT) {
 		srand((unsigned int)time(NULL));

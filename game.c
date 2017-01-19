@@ -86,6 +86,7 @@ int game_play() {
 	SDL_Event event;
 	int working = 1;
 	int score;
+	/*Show game keys info*/
 	set_info_text(GAME_TEXT);
 	animation(GAME_START);
 	init_game(&area, &info_blocs);
@@ -136,6 +137,7 @@ int game_play() {
 		if (working < 0) set_score_num(0); 
 	} while (working > 0);
 	animation(GAME_OVER);
+	/*Show menu keys info*/
 	set_info_text(MENU_TEXT);
 	return working;
 }

@@ -4,10 +4,27 @@
 /*Games*/
 #include "duck.h"
 #include "snake.h"
+#include "galaxy.h"
 
 #include "SDL.h"
 #include "menu.h"
 #include "app_window.h"
+
+typedef struct menuelement_t {
+	const int* menu_image;
+	int hi_score;
+	int(*init)(int**, int**);
+	int(*next_step)(int* const, int* const, const SDL_Keycode* const);
+	/*return score or -1 if gameover*/
+} menuelement_t;
+
+typedef struct menu_t {
+	int count;
+	int capacity;
+	int choice;
+	int speed;
+	menuelement_t *menuelement;
+} menu_t;
 
 
 #define MAX_SPEED 9
@@ -44,7 +61,8 @@ int init_menu() {
 	menu.speed = 0;
 	if ((menu.menuelement = (menuelement_t*)malloc(sizeof(menuelement_t) * 2)) == NULL) return INIT_MENU_ERROR;
 	add_menu_item(menu_image_snake, 0, init_snake, next_step_snake);
-	add_menu_item(menu_image_duck, 777, init_duck, next_step_duck);
+	add_menu_item(menu_image_galaxy, 0, init_galaxy, next_step_galaxy);
+	add_menu_item(menu_image_duck, 777, init_duck, next_step_duck); 
 	return INIT_MENU_OK;
 }
 

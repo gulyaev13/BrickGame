@@ -299,6 +299,7 @@ static void create_text() {
 	/*Game over*/
 	set_game_over_text(TEXT_SHOW_OFF);
 	/*Navigation info*/
+	/*Escape key*/
 	dest.x = 3 * BORDER;
 	dest.y = INFO_AREA_Y;
 	print_ttf(screenSurface, "ESC", FONT_PATH, FONT_SIZE, text_color, dest);
@@ -307,13 +308,16 @@ static void create_text() {
 	print_ttf(screenSurface, "Menu", FONT_PATH, FONT_SIZE, text_color, dest);
 	dest.x = 3 * BORDER + 5 * BRICK_SIZE_WITH_BORDER;
 	dest.y = INFO_AREA_Y;
+	/*Enter key*/
 	print_ttf(screenSurface, "ENTER", FONT_PATH, FONT_SIZE, text_color, dest);
 	dest.x = 3 * BORDER + 2 * BRICK_SIZE_WITH_BORDER;
 	dest.y = INFO_AREA_Y + 2 * BRICK_SIZE_WITH_BORDER;
+	/*Navigation keys*/
 	print_ttf(screenSurface, "UP / DOWN", FONT_PATH, FONT_SIZE, text_color, dest);
 	dest.x = 3 * BORDER + 8 * BRICK_SIZE_WITH_BORDER;
 	dest.y = INFO_AREA_Y + 2 * BRICK_SIZE_WITH_BORDER;
 	print_ttf(screenSurface, "LEFT / RIGHT", FONT_PATH, FONT_SIZE, text_color, dest);
+	/*Show menu keys info*/
 	set_info_text(MENU_TEXT);
 }
 
