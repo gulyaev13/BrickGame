@@ -6,7 +6,7 @@
 #include "snake.h"
 #include "galaxy.h"
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 #include "menu.h"
 #include "app_window.h"
 
@@ -62,7 +62,7 @@ int init_menu() {
 	if ((menu.menuelement = (menuelement_t*)malloc(sizeof(menuelement_t) * 2)) == NULL) return INIT_MENU_ERROR;
 	add_menu_item(menu_image_snake, 0, init_snake, next_step_snake);
 	add_menu_item(menu_image_galaxy, 0, init_galaxy, next_step_galaxy);
-	add_menu_item(menu_image_duck, 777, init_duck, next_step_duck); 
+	add_menu_item(menu_image_duck, 0, init_duck, next_step_duck); 
 	return INIT_MENU_OK;
 }
 

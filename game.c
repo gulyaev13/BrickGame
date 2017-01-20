@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "app_window.h"
 #include "menu.h"
+#include "SDL2/SDL.h"
 
 #define SPEED_FACTOR 35
 
@@ -24,7 +26,7 @@ static void animation(game_state_t state) {
 	area = (int*)calloc(PLAYGROUND_COLOMNS * PLAYGROUND_ROWS, sizeof(int));
 	info_blocs = (int*)calloc(INFO_BLOCKS_COUNT * INFO_BLOCKS_COUNT, sizeof(int));
 	render(area, info_blocs);
-	if(state) set_game_over_text(TEXT_SHOW_ON);
+	if (state) set_game_over_text(TEXT_SHOW_ON);
 	for (row = PLAYGROUND_ROWS - 1; row >= 0; --row) {
 		for (colomn = 0; colomn < PLAYGROUND_COLOMNS; ++colomn) {
 			area[row * PLAYGROUND_COLOMNS + colomn] = 1;
@@ -72,7 +74,7 @@ static void game_pause() {
 			exit(0);
 			break;
 		case SDL_KEYDOWN:
-			switch (event.key.keysym.sym){
+			switch (event.key.keysym.sym) {
 			case SDLK_RETURN:
 				working = 0;
 				break;
@@ -97,8 +99,8 @@ int game_play() {
 			switch (event.type) {
 			case SDL_QUIT:
 				working = 0;
-				//destroy_gui();
-				//exit(0);
+				/*destroy_gui();
+				exit(0);*/
 				break;
 			case SDL_KEYDOWN:
 				switch (event.key.keysym.sym) {
@@ -125,8 +127,8 @@ int game_play() {
 				set_hi_score(score);
 				set_hi_score_num(score);
 			}
-			
-		} 
+
+		}
 		else if (score == 0) {
 			set_score_num(score);
 			pre_game_pause();
@@ -134,7 +136,7 @@ int game_play() {
 		else {
 			working = -1;
 		}
-		if (working < 0) set_score_num(0); 
+		if (working < 0) set_score_num(0);
 	} while (working > 0);
 	animation(GAME_OVER);
 	/*Show menu keys info*/

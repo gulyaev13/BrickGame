@@ -1,14 +1,12 @@
-#include "SDL.h"
-#include "SDL_ttf.h"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_ttf.h"
 #include <stdio.h>
 #include <time.h>
 #include "menu.h"
 #include "game.h"
 #include "app_window.h"
 
-void delay(size_t mils);
 int main(int argc, char* args[]) {
-	//menu mainmenu;
 	if (init_gui()) {
 		printf("SDL_Error: %s\n", SDL_GetError());
 		exit(1);
@@ -30,7 +28,3 @@ int main(int argc, char* args[]) {
 	return 0;
 }
 
-void delay(size_t mils) {
-	long start = clock();
-	while (clock() - start < ((double)mils) * CLOCKS_PER_SEC / 1000);
-}

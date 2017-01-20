@@ -1,7 +1,7 @@
 #pragma once
 #ifndef MENU_H_INCLUDED
 #define MENU_H_INCLUDED
-
+#include "SDL2/SDL.h"
 typedef enum {
 	INIT_MENU_OK = 0,
 	INIT_MENU_ERROR

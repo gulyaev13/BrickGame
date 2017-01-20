@@ -1,7 +1,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "app_window.h"
 #include "game.h"
-#include "SDL_ttf.h"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_ttf.h"
 #include <stdio.h>
 
 /*Coordinates and sizes*/
@@ -26,11 +27,12 @@ static const SDL_Color text_color = { 0,0,0,0 };/*black color*/
 static const SDL_Color empty_text_color = { 0x61,0x70,0x5B,0 };/*color same empty block*/
 
 /*Paths*/
-#define FONT_PATH "C:/Windows/Fonts/ARIALNB.ttf"
+/*#define FONT_PATH "C:/Windows/Fonts/ARIALNB.ttf"*/
+#define FONT_PATH "../res/ARIALNB.ttf"
 
 static const int SCREEN_WIDTH = INFO_AREA_X + INFO_BLOCKS_COUNT * BRICK_SIZE_WITH_BORDER;
 static const int SCREEN_HEIGHT = INFO_AREA_Y + INFO_BLOCKS_COUNT * BRICK_SIZE_WITH_BORDER;
-//static const int SCREEN_HEIGHT = 5 * BORDER + BRICK_SIZE_WITH_BORDER * PLAYGROUND_ROWS;
+
 static SDL_Window* window = NULL;
 static SDL_Surface* screenSurface = NULL;
 /*Text block's coordinates*/
@@ -112,9 +114,6 @@ static const SDL_Rect left_right_text_dest = {
 	BRICK_SIZE_WITH_BORDER * 5,
 	BRICK_SIZE_WITH_BORDER
 };
-
-
-
 
 static void print_ttf(SDL_Surface *sDest, char* message, char* font, int size, SDL_Color color, SDL_Rect dest) {
 	TTF_Font *fnt = TTF_OpenFont(font, size);
@@ -376,7 +375,6 @@ int create_gui() {
 	rect.h = BORDER + BRICK_SIZE_WITH_BORDER * PLAYGROUND_ROWS;
 	rect.w = BORDER + BRICK_SIZE_WITH_BORDER * PLAYGROUND_COLOMNS;
 	SDL_FillRect(screenSurface, &rect, BACKGROUND_COLOR);
-	//Добавить отображение счёта
 	create_text();
 	fill_info_blocks(info_blocs);
 	SDL_UpdateWindowSurface(window);

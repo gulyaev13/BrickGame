@@ -1,7 +1,6 @@
 #pragma once
 #ifndef APP_WINDOW_H_INCLUDED
 #define APP_WINDOW_H_INCLUDED
-#include "SDL.h"
 
 #define PLAYGROUND_COLOMNS 10
 #define PLAYGROUND_ROWS 20
@@ -11,7 +10,7 @@ typedef enum {
 	SDL_INIT_EVERYTHING_OK = 0,
 	SDL_INIT_ERROR,
 	SDL_CREATE_WINDOW_ERROR,
-	SDL_GET_SURFACE_ERROR,
+	SDL_GET_SURFACE_ERROR
 } gui_init_t;
 
 typedef enum text_show_t {

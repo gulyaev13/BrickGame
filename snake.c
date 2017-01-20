@@ -1,12 +1,19 @@
 #include "app_window.h"
 #include "menu.h"
 #include "structs.h"
+#include "SDL2/SDL.h"
 #include <stdlib.h>
 #include <time.h>
 
 #define CHERRY -1
 #define CHERRY_ADD_SPEED 20
 #define MAX_CHERRY_COUNT 2
+
+#define MOVE_SCORE 5
+#define MOVE_SCORE_BONUS 1
+#define EAT_CHERRY_SCORE 100
+#define EAT_CHERRY_BONUS 50
+
 
 typedef enum {
 	STEP_FAILED = 0,
@@ -22,7 +29,8 @@ static int snake_length;
 static int score;
 static int cherry_interval;
 static int cherry_count;
-static update_lives(int* const info_blocs) {
+
+static void update_lives(int* const info_blocs) {
 	int row;
 	for (row = INFO_BLOCKS_COUNT - 1; row >= 0; --row) {
 		info_blocs[row * INFO_BLOCKS_COUNT] = lives - (INFO_BLOCKS_COUNT - row - 1) > 0 ? 1 : 0;
@@ -156,10 +164,10 @@ int next_step_snake(int* const area, int* const info_blocs, const SDL_Keycode* c
 	}
 	if (step_state == STEP_TRUE) {
 		move_snake(area);
-		score += 5 + 1 * get_speed();
+		score += MOVE_SCORE + MOVE_SCORE_BONUS * get_speed();
 	}
 	if (step_state == EAT_CHERRY) {
-		score += 100 + 50 * get_speed();
+		score += EAT_CHERRY_SCORE + EAT_CHERRY_BONUS * get_speed();
 		cherry_count--;
 		create_cherry(area);
 		cherry_interval = 0;

@@ -1,6 +1,7 @@
 #include "app_window.h"
 #include "menu.h"
 #include "structs.h"
+#include "SDL2/SDL.h"
 #include <stdlib.h>
 #include <time.h>
 
@@ -10,7 +11,7 @@
 #define ROCKET 1
 #define STONE -1
 
-#define STONE_SPEED 18
+#define STONE_SPEED 16
 #define ROCKET_SEND_SPEED 3
 
 #define ROCKET_HIT 5
@@ -57,11 +58,11 @@ static void send_rocket(int* const area) {
 }
 
 static void move_spaceship(int* const area, horizontal_move_t move_derection) {
-	coordinates_t destination = {
-		spaceship.x + move_derection,
-		spaceship.y
-	};
+	coordinates_t destination;
+	destination.x = spaceship.x + move_derection;
+	destination.y = spaceship.y;
 	if (!(destination.x < 0 || destination.x >= PLAYGROUND_COLOMNS)) {
+		
 		area[destination.y * PLAYGROUND_COLOMNS + destination.x] = 1;
 		area[spaceship.y * PLAYGROUND_COLOMNS + spaceship.x] = 0;
 		spaceship = destination;
