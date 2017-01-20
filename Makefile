@@ -7,10 +7,13 @@ LFLAGS= -lSDL2 -lSDL2_ttf
 CFILES= src/*.c
 OFILES= *.o
 
-all:
+all: move_src mkdir_build
 	$(CC) $(CFLAGS) $(CK) $(CFILES)
-	(ls build 1>/dev/null 2>&1) || mkdir build
 	$(CC) $(LDK) $(TARGET) $(OFILES) $(LFLAGS)
 	rm -f $(OFILES)
+move_src:
+	(ls src 1>/dev/null 2>&1) || (mkdir src && mv *.[ch] src/)
+mkdir_build:
+	(ls build 1>/dev/null 2>&1) || mkdir build
 clean:
 	rm -f $(TARGET)
