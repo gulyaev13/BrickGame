@@ -31,7 +31,6 @@ static void set_easter_egg(int* const area) {
 			area[row * PLAYGROUND_COLOMNS + colomn] = easter_image[row * PLAYGROUND_COLOMNS + colomn];
 		}
 	}
-
 }
 int init_duck(int** area, int** info_blocs) {
 	*area = (int*)calloc(PLAYGROUND_COLOMNS * PLAYGROUND_ROWS, sizeof(int));

@@ -104,6 +104,9 @@ void choose_menu_item() {
 			render(menu.menuelement[menu.choice].menu_image, NULL);
 	}
 }
+void free_menu() {
+	free(menu.menuelement);
+}
 
 int init_game(int** area, int** info_blocs) {
 	return menu.menuelement[menu.choice].init(area, info_blocs);

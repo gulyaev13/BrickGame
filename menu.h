@@ -9,6 +9,8 @@ typedef enum {
 
 int init_menu();
 
+void free_menu();
+
 void choose_menu_item();
 
 int init_game(int** area, int** info_blocs);
