@@ -27,7 +27,8 @@ static const SDL_Color text_color = { 0,0,0,0 };/*black color*/
 static const SDL_Color empty_text_color = { 0x61,0x70,0x5B,0 };/*color same empty block*/
 
 /*Paths*/
-#define FONT_PATH "ARIALNB.ttf"
+/*#define FONT_PATH "C:/Windows/Fonts/ARIALNB.ttf"*/
+#define FONT_PATH "../res/ARIALNB.TTF"
 
 static const int SCREEN_WIDTH = INFO_AREA_X + INFO_BLOCKS_COUNT * BRICK_SIZE_WITH_BORDER;
 static const int SCREEN_HEIGHT = INFO_AREA_Y + INFO_BLOCKS_COUNT * BRICK_SIZE_WITH_BORDER;
@@ -113,9 +114,6 @@ static const SDL_Rect left_right_text_dest = {
 	BRICK_SIZE_WITH_BORDER * 5,
 	BRICK_SIZE_WITH_BORDER
 };
-
-
-
 
 static void print_ttf(SDL_Surface *sDest, char* message, char* font, int size, SDL_Color color, SDL_Rect dest) {
 	TTF_Font *fnt = TTF_OpenFont(font, size);
