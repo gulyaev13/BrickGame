@@ -11,7 +11,8 @@ Compile:
 ```
 Run emulator:
  ```sh
- $ build/BrickGame
+ $ cd build
+ $ ./BrickGame
  ```
  Delete executable file:
  ```sh
