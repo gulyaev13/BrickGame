@@ -14,18 +14,13 @@
 #define INFO_AREA_X (5 * BORDER + BRICK_SIZE_WITH_BORDER * PLAYGROUND_COLOMNS)
 #define INFO_AREA_Y (5 * BORDER + BRICK_SIZE_WITH_BORDER * PLAYGROUND_ROWS)
 
-
 /*Colors*/
-#define BACKGROUND_COLOR_1 0xD3D3D3
 #define BACKGROUND_COLOR 0x6D775C
-#define INDIGO_COLOR 0x4B0082
-#define RED_COLOR 0xFF0000
 #define BLACK_COLOR 0x000000
 #define EMPTY_BLOCKS_COLOR 0x61705B
-#define DARK_GREY_COLOR 0x808080
 
-static const SDL_Color text_color = { 0,0,0,0 };/*black color*/
-static const SDL_Color empty_text_color = { 0x61,0x70,0x5B,0 };/*color same empty block*/
+static const SDL_Color TEXT_COLOR = { 0,0,0,0 };/*black color*/
+static const SDL_Color EMPTY_TEXT_COLOR = { 0x61,0x70,0x5B,0 };/*color same empty block*/
 
 /*Paths*/
 /*#define FONT_PATH "C:/Windows/Fonts/ARIALNB.ttf"*/
@@ -124,8 +119,8 @@ static void print_ttf(SDL_Surface *sDest, char* message, char* font, int size, S
 	TTF_CloseFont(fnt);
 }
 
-static void fill_playgraund(const int* const area) {
-	int row, colomn;
+static void fill_playgraund(const long* const area) {
+	size_t row, colomn;
 	SDL_Rect rect, rect1, rect2, rect3;
 	rect3.h = PLAYGROUND_ROWS * BRICK_SIZE_WITH_BORDER;
 	rect3.w = PLAYGROUND_COLOMNS * BRICK_SIZE_WITH_BORDER;
@@ -147,8 +142,8 @@ static void fill_playgraund(const int* const area) {
 			else {
 				block_color = EMPTY_BLOCKS_COLOR;
 			}
-			rect.x = rect3.x + colomn * BRICK_SIZE_WITH_BORDER;
-			rect.y = rect3.y + row * BRICK_SIZE_WITH_BORDER;
+			rect.x = rect3.x + (int)colomn * BRICK_SIZE_WITH_BORDER;
+			rect.y = rect3.y + (int)row * BRICK_SIZE_WITH_BORDER;
 			SDL_FillRect(screenSurface, &rect, block_color);
 			rect1.x = rect.x + BORDER;
 			rect1.y = rect.y + BORDER;
@@ -160,8 +155,8 @@ static void fill_playgraund(const int* const area) {
 	}
 }
 
-static void fill_info_blocks(const int* const info_blocks) {
-	int row, colomn;
+static void fill_info_blocks(const long* const info_blocks) {
+	size_t row, colomn;
 	SDL_Rect rect1, rect2, rect3;
 	SDL_Rect rect = {
 		INFO_AREA_X,
@@ -185,8 +180,8 @@ static void fill_info_blocks(const int* const info_blocks) {
 			else {
 				block_color = EMPTY_BLOCKS_COLOR;
 			}
-			rect1.x = rect.x + colomn * BRICK_SIZE_WITH_BORDER;
-			rect1.y = rect.y + row * BRICK_SIZE_WITH_BORDER;
+			rect1.x = rect.x + (int)colomn * BRICK_SIZE_WITH_BORDER;
+			rect1.y = rect.y + (int)row * BRICK_SIZE_WITH_BORDER;
 			SDL_FillRect(screenSurface, &rect1, block_color);
 			rect2.x = rect1.x + BORDER;
 			rect2.y = rect1.y + BORDER;
@@ -202,7 +197,7 @@ void set_hi_score_num(int hi_score) {
 	char* const hi_score_text = (char*)malloc(7 * sizeof(char));
 	sprintf(hi_score_text, "%d", hi_score);
 	SDL_FillRect(screenSurface, &hi_score_num_dest, BACKGROUND_COLOR);
-	print_ttf(screenSurface, hi_score_text, FONT_PATH, FONT_SIZE, text_color, hi_score_num_dest);
+	print_ttf(screenSurface, hi_score_text, FONT_PATH, FONT_SIZE, TEXT_COLOR, hi_score_num_dest);
 	free(hi_score_text);
 	SDL_UpdateWindowSurface(window);
 }
@@ -210,7 +205,7 @@ void set_score_num(int score) {
 	char* const score_text = (char*)malloc(7 * sizeof(char));
 	sprintf(score_text, "%d", score);
 	SDL_FillRect(screenSurface, &score_num_dest, BACKGROUND_COLOR);
-	print_ttf(screenSurface, score_text, FONT_PATH, FONT_SIZE, text_color, score_num_dest);
+	print_ttf(screenSurface, score_text, FONT_PATH, FONT_SIZE, TEXT_COLOR, score_num_dest);
 	free(score_text);
 	SDL_UpdateWindowSurface(window);
 }
@@ -219,7 +214,7 @@ void set_speed_num(int speed) {
 	char* const speed_text = (char*)malloc(7 * sizeof(char));
 	sprintf(speed_text, "%d", speed);
 	SDL_FillRect(screenSurface, &speed_num_dest, BACKGROUND_COLOR);
-	print_ttf(screenSurface, speed_text, FONT_PATH, FONT_SIZE, text_color, speed_num_dest);
+	print_ttf(screenSurface, speed_text, FONT_PATH, FONT_SIZE, TEXT_COLOR, speed_num_dest);
 	free(speed_text);
 	SDL_UpdateWindowSurface(window);
 }
@@ -227,10 +222,10 @@ void set_speed_num(int speed) {
 void set_pause_text(enum text_show_t text_show) {
 	SDL_Color color;
 	if (text_show) {
-		color = text_color;
+		color = TEXT_COLOR;
 	}
 	else {
-		color = empty_text_color;
+		color = EMPTY_TEXT_COLOR;
 	}
 	SDL_FillRect(screenSurface, &pause_text_dest, BACKGROUND_COLOR);
 	print_ttf(screenSurface, "Pause", FONT_PATH, FONT_SIZE, color, pause_text_dest);
@@ -239,10 +234,10 @@ void set_pause_text(enum text_show_t text_show) {
 void set_game_over_text(enum text_show_t text_show) {
 	SDL_Color color;
 	if (text_show) {
-		color = text_color;
+		color = TEXT_COLOR;
 	}
 	else {
-		color = empty_text_color;
+		color = EMPTY_TEXT_COLOR;
 	}
 	SDL_FillRect(screenSurface, &game_text_dest, BACKGROUND_COLOR);
 	SDL_FillRect(screenSurface, &over_text_dest, BACKGROUND_COLOR);
@@ -258,40 +253,40 @@ void set_info_text(enum info_text_state_t info_text_state) {
 	SDL_FillRect(screenSurface, &speed_up_down_text_dest, BACKGROUND_COLOR);
 	SDL_FillRect(screenSurface, &left_right_text_dest, BACKGROUND_COLOR);
 	if (info_text_state) {
-		print_ttf(screenSurface, "Start", FONT_PATH, FONT_SIZE, text_color, start_text_dest);
-		print_ttf(screenSurface, "Speed up / down", FONT_PATH, FONT_SIZE, text_color, speed_up_down_text_dest);
-		print_ttf(screenSurface, "Choose game", FONT_PATH, FONT_SIZE, text_color, left_right_text_dest);
+		print_ttf(screenSurface, "Start", FONT_PATH, FONT_SIZE, TEXT_COLOR, start_text_dest);
+		print_ttf(screenSurface, "Speed up / down", FONT_PATH, FONT_SIZE, TEXT_COLOR, speed_up_down_text_dest);
+		print_ttf(screenSurface, "Choose game", FONT_PATH, FONT_SIZE, TEXT_COLOR, left_right_text_dest);
 	}
 	else {
-		print_ttf(screenSurface, "Pause", FONT_PATH, FONT_SIZE, text_color, start_text_dest);
-		print_ttf(screenSurface, "SPACE", FONT_PATH, FONT_SIZE, text_color, space_text_dest);
-		print_ttf(screenSurface, "Boost / Rotate", FONT_PATH, FONT_SIZE, text_color, space_func_text_dest);
-		print_ttf(screenSurface, "Navigation", FONT_PATH, FONT_SIZE, text_color, up_down_text_dest);
-		print_ttf(screenSurface, "Navigation", FONT_PATH, FONT_SIZE, text_color, left_right_text_dest);
+		print_ttf(screenSurface, "Pause", FONT_PATH, FONT_SIZE, TEXT_COLOR, start_text_dest);
+		print_ttf(screenSurface, "SPACE", FONT_PATH, FONT_SIZE, TEXT_COLOR, space_text_dest);
+		print_ttf(screenSurface, "Boost / Rotate", FONT_PATH, FONT_SIZE, TEXT_COLOR, space_func_text_dest);
+		print_ttf(screenSurface, "Navigation", FONT_PATH, FONT_SIZE, TEXT_COLOR, up_down_text_dest);
+		print_ttf(screenSurface, "Navigation", FONT_PATH, FONT_SIZE, TEXT_COLOR, left_right_text_dest);
 	}
 	SDL_UpdateWindowSurface(window);
 }
 
-static void create_text() {
+static void create_text(void) {
 	SDL_Rect dest;
 	/*Hi-Score label*/
 	dest.x = INFO_AREA_X /*+ BRICK_SIZE_WITH_BORDER*/;
 	dest.y = 3 * BORDER;
 	dest.w = BRICK_SIZE_WITH_BORDER * 4;
 	dest.h = BRICK_SIZE_WITH_BORDER;
-	print_ttf(screenSurface, "Hi-Score", FONT_PATH, FONT_SIZE, text_color, dest);
+	print_ttf(screenSurface, "Hi-Score", FONT_PATH, FONT_SIZE, TEXT_COLOR, dest);
 	/*Hi-Score number*/
 	set_hi_score_num(0);
 	/*Score label*/
 	dest.x = INFO_AREA_X /*+ BRICK_SIZE_WITH_BORDER*/;
 	dest.y = 3 * BORDER + 2 * BRICK_SIZE_WITH_BORDER;
-	print_ttf(screenSurface, "Score", FONT_PATH, FONT_SIZE, text_color, dest);
+	print_ttf(screenSurface, "Score", FONT_PATH, FONT_SIZE, TEXT_COLOR, dest);
 	/*Score number*/
 	set_score_num(0);
 	/*Speed label*/
 	dest.x = INFO_AREA_X /*+ BRICK_SIZE_WITH_BORDER*/;
 	dest.y = 3 * BORDER + 11 * BRICK_SIZE_WITH_BORDER;
-	print_ttf(screenSurface, "Speed", FONT_PATH, FONT_SIZE, text_color, dest);
+	print_ttf(screenSurface, "Speed", FONT_PATH, FONT_SIZE, TEXT_COLOR, dest);
 	/*Speed number*/
 	set_speed_num(0);
 	/*Pause*/
@@ -302,21 +297,21 @@ static void create_text() {
 	/*Escape key*/
 	dest.x = 3 * BORDER;
 	dest.y = INFO_AREA_Y;
-	print_ttf(screenSurface, "ESC", FONT_PATH, FONT_SIZE, text_color, dest);
+	print_ttf(screenSurface, "ESC", FONT_PATH, FONT_SIZE, TEXT_COLOR, dest);
 	dest.x = 3 * BORDER;
 	dest.y = INFO_AREA_Y + BRICK_SIZE_WITH_BORDER;
-	print_ttf(screenSurface, "Menu", FONT_PATH, FONT_SIZE, text_color, dest);
+	print_ttf(screenSurface, "Menu", FONT_PATH, FONT_SIZE, TEXT_COLOR, dest);
 	dest.x = 3 * BORDER + 5 * BRICK_SIZE_WITH_BORDER;
 	dest.y = INFO_AREA_Y;
 	/*Enter key*/
-	print_ttf(screenSurface, "ENTER", FONT_PATH, FONT_SIZE, text_color, dest);
+	print_ttf(screenSurface, "ENTER", FONT_PATH, FONT_SIZE, TEXT_COLOR, dest);
 	dest.x = 3 * BORDER + 2 * BRICK_SIZE_WITH_BORDER;
 	dest.y = INFO_AREA_Y + 2 * BRICK_SIZE_WITH_BORDER;
 	/*Navigation keys*/
-	print_ttf(screenSurface, "UP / DOWN", FONT_PATH, FONT_SIZE, text_color, dest);
+	print_ttf(screenSurface, "UP / DOWN", FONT_PATH, FONT_SIZE, TEXT_COLOR, dest);
 	dest.x = 3 * BORDER + 8 * BRICK_SIZE_WITH_BORDER;
 	dest.y = INFO_AREA_Y + 2 * BRICK_SIZE_WITH_BORDER;
-	print_ttf(screenSurface, "LEFT / RIGHT", FONT_PATH, FONT_SIZE, text_color, dest);
+	print_ttf(screenSurface, "LEFT / RIGHT", FONT_PATH, FONT_SIZE, TEXT_COLOR, dest);
 	/*Show menu keys info*/
 	set_info_text(MENU_TEXT);
 }
@@ -349,7 +344,7 @@ int is_event_correct(void* userdata, SDL_Event* event) {
 	return 0;
 }
 
-int init_gui() {
+int init_gui(void) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) return SDL_INIT_ERROR;
 	window = SDL_CreateWindow("Brick Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (window == NULL) return SDL_CREATE_WINDOW_ERROR;
@@ -359,9 +354,9 @@ int init_gui() {
 	return SDL_INIT_EVERYTHING_OK;
 }
 
-int create_gui() {
+int create_gui(void) {
 	SDL_Rect rect;
-	int info_blocs[16] = {	0,0,0,0,
+	long info_blocs[16] = {	0,0,0,0,
 							0,0,0,0,
 							0,0,0,0,
 							0,0,0,0 };
@@ -382,7 +377,7 @@ int create_gui() {
 	return 0;
 }
 
-void render(const int* const area, const int* const info_blocs) {
+void render(const long* const area, const long* const info_blocs) {
 	fill_playgraund(area);
 	if (info_blocs) fill_info_blocks(info_blocs);
 	SDL_UpdateWindowSurface(window);

@@ -1,6 +1,6 @@
 #ifndef GALAXY_H_INCLUDED
 #define GALAXY_H_INCLUDED
-const int menu_image_galaxy[200] = {
+const long menu_image_galaxy[200] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 1, 1, 1, 0, 0, 0,
 	0, 0, 0, 1, 0, 0, 0, 1, 0, 0,
@@ -23,7 +23,7 @@ const int menu_image_galaxy[200] = {
 	0, 0, 0, 1, 0, 0, 0, 0, 0, 0
 };
 
-int init_galaxy(int** area, int** info_blocs);
+int init_galaxy(long** area, long** info_blocs);
 
-int next_step_galaxy(int* const area, int* const info_blocs, const SDL_Keycode* const key_code);
+int next_step_galaxy(long* const area, long* const info_blocs, const SDL_Keycode* const key_code);
 #endif

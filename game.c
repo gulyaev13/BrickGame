@@ -11,8 +11,8 @@ enum game_state_t {
 	GAME_OVER = -1
 };
 
-static int* area = NULL;
-static int* info_blocs = NULL;
+static long* area = NULL;
+static long* info_blocs = NULL;
 
 void free_areas(void) {
 	free(area);
@@ -21,15 +21,15 @@ void free_areas(void) {
 	info_blocs = NULL;
 }
 static void animation(enum game_state_t state) {
-	int row, colomn;
+	size_t row, colomn;
 	free_areas();
-	area = (int*)calloc(PLAYGROUND_COLOMNS * PLAYGROUND_ROWS, sizeof(int));
-	info_blocs = (int*)calloc(INFO_BLOCKS_COUNT * INFO_BLOCKS_COUNT, sizeof(int));
+	area = (long*)calloc(PLAYGROUND_COLOMNS * PLAYGROUND_ROWS, sizeof(long));
+	info_blocs = (long*)calloc(INFO_BLOCKS_COUNT * INFO_BLOCKS_COUNT, sizeof(long));
 	render(area, info_blocs);
 	if (state) set_game_over_text(TEXT_SHOW_ON);
-	for (row = PLAYGROUND_ROWS - 1; row >= 0; --row) {
+	for (row = PLAYGROUND_ROWS; row > 0; --row) {
 		for (colomn = 0; colomn < PLAYGROUND_COLOMNS; ++colomn) {
-			area[row * PLAYGROUND_COLOMNS + colomn] = 1;
+			area[(row - 1) * PLAYGROUND_COLOMNS + colomn] = 1;
 		}
 		render(area, NULL);
 		SDL_Delay(80);
@@ -87,7 +87,7 @@ static void game_pause(void) {
 int game_play(void) {
 	SDL_Event event;
 	int working = 1;
-	int score;
+	int score = -1;
 	/*Show game keys info*/
 	set_info_text(GAME_TEXT);
 	animation(GAME_START);

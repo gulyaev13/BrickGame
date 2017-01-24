@@ -1,7 +1,7 @@
 #include "app_window.h"
 #include "SDL2/SDL.h"
 #include <stdlib.h>
-const int easter_image[200] = {
+const long easter_image[200] = {
 	1, 1, 1, 1, 0, 1, 1, 1, 1, 1,
 	1, 0, 0, 0, 1, 0, 0, 1, 0, 0,
 	1, 0, 0, 0, 1, 0, 0, 1, 0, 0,
@@ -24,7 +24,7 @@ const int easter_image[200] = {
 	1, 0, 0, 1, 0, 0, 1, 0, 0, 1
 };
 
-static void set_easter_egg(int* const area) {
+static void set_easter_egg(long* const area) {
 	size_t row, colomn;
 	for (row = 0; row < PLAYGROUND_ROWS; ++row) {
 		for (colomn = 0; colomn < PLAYGROUND_COLOMNS; ++colomn) {
@@ -32,13 +32,13 @@ static void set_easter_egg(int* const area) {
 		}
 	}
 }
-int init_duck(int** area, int** info_blocs) {
-	*area = (int*)calloc(PLAYGROUND_COLOMNS * PLAYGROUND_ROWS, sizeof(int));
-	*info_blocs = (int*)calloc(INFO_BLOCKS_COUNT * INFO_BLOCKS_COUNT, sizeof(int));
+int init_duck(long** area, long** info_blocs) {
+	*area = (long*)calloc(PLAYGROUND_COLOMNS * PLAYGROUND_ROWS, sizeof(long));
+	*info_blocs = (long*)calloc(INFO_BLOCKS_COUNT * INFO_BLOCKS_COUNT, sizeof(long));
 	set_easter_egg(*area);
 	return 0;
 }
 
-int next_step_duck(int* const area, int* const info_blocs, const SDL_Keycode* const key_code) {
+int next_step_duck(long* const area, long* const info_blocs, const SDL_Keycode* const key_code) {
 	return -1;
 }

@@ -12,9 +12,9 @@ void free_menu(void);
 
 void choose_menu_item(void);
 
-int init_game(int** area, int** info_blocs);
+int init_game(long** area, long** info_blocs);
 
-int game_next_step(int* const area, int* const info_blocs, const SDL_Keycode* const key_code);
+int game_next_step(long* const area, long* const info_blocs, const SDL_Keycode* const key_code);
 
 int get_speed(void);
 

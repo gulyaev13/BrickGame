@@ -26,7 +26,7 @@ int init_gui(void);
 
 int create_gui(void);
 
-void render(const int* const area, const int* const info_blocs);
+void render(const long* const area, const long* const info_blocs);
 
 void destroy_gui(void);
 

@@ -11,10 +11,10 @@
 #include "app_window.h"
 
 struct menuelement_t {
-	const int* menu_image;
+	const long* menu_image;
 	int hi_score;
-	int(*init)(int**, int**);
-	int(*next_step)(int* const, int* const, const SDL_Keycode* const);
+	int(*init)(long**, long**);
+	int(*next_step)(long* const, long* const, const SDL_Keycode* const);
 	/*return score or -1 if gameover and 0 if pre-game pause(lost lives)*/
 };
 
@@ -33,7 +33,7 @@ struct menu_t {
 
 static struct menu_t menu;
 
-static void add_menu_item(const int* menu_image, int hi_score, int(*init)(int**, int**), int(*next_step)(int* const, int* const, const SDL_Keycode* const)) {
+static void add_menu_item(const long* menu_image, int hi_score, int(*init)(long**, long**), int(*next_step)(long* const, long* const, const SDL_Keycode* const)) {
 	int working = 1;
 	while (working) {
 		if (menu.count + 1 <= menu.capacity) {
@@ -108,11 +108,11 @@ void free_menu(void) {
 	free(menu.menuelement);
 }
 
-int init_game(int** area, int** info_blocs) {
+int init_game(long** area, long** info_blocs) {
 	return menu.menuelement[menu.choice].init(area, info_blocs);
 }
 
-int game_next_step(int* const area, int* const info_blocs, const SDL_Keycode* const key_code) {
+int game_next_step(long* const area, long* const info_blocs, const SDL_Keycode* const key_code) {
 	return menu.menuelement[menu.choice].next_step(area, info_blocs, key_code);
 }
 
