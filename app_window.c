@@ -224,7 +224,7 @@ void set_speed_num(int speed) {
 	SDL_UpdateWindowSurface(window);
 }
 
-void set_pause_text(text_show_t text_show) {
+void set_pause_text(enum text_show_t text_show) {
 	SDL_Color color;
 	if (text_show) {
 		color = text_color;
@@ -236,7 +236,7 @@ void set_pause_text(text_show_t text_show) {
 	print_ttf(screenSurface, "Pause", FONT_PATH, FONT_SIZE, color, pause_text_dest);
 	SDL_UpdateWindowSurface(window);
 }
-void set_game_over_text(text_show_t text_show) {
+void set_game_over_text(enum text_show_t text_show) {
 	SDL_Color color;
 	if (text_show) {
 		color = text_color;
@@ -251,7 +251,7 @@ void set_game_over_text(text_show_t text_show) {
 	SDL_UpdateWindowSurface(window);
 }
 
-void set_info_text(info_text_state_t info_text_state) {
+void set_info_text(enum info_text_state_t info_text_state) {
 	SDL_FillRect(screenSurface, &start_text_dest, BACKGROUND_COLOR);
 	SDL_FillRect(screenSurface, &space_text_dest, BACKGROUND_COLOR);
 	SDL_FillRect(screenSurface, &space_func_text_dest, BACKGROUND_COLOR);
@@ -382,18 +382,13 @@ int create_gui() {
 	return 0;
 }
 
-void fill_red_test() {
-	SDL_FillRect(screenSurface, NULL, RED_COLOR);
-	SDL_UpdateWindowSurface(window);
-}
-
 void render(const int* const area, const int* const info_blocs) {
 	fill_playgraund(area);
 	if (info_blocs) fill_info_blocks(info_blocs);
 	SDL_UpdateWindowSurface(window);
 }
 
-void destroy_gui() {
+void destroy_gui(void) {
 	SDL_FreeSurface(screenSurface);
 	SDL_DestroyWindow(window);
 	TTF_Quit();

@@ -6,21 +6,21 @@
 
 #define SPEED_FACTOR 35
 
-typedef enum {
+enum game_state_t {
 	GAME_START = 0,
 	GAME_OVER = -1
-} game_state_t;
+};
 
 static int* area = NULL;
 static int* info_blocs = NULL;
 
-void free_areas() {
+void free_areas(void) {
 	free(area);
 	free(info_blocs);
 	area = NULL;
 	info_blocs = NULL;
 }
-static void animation(game_state_t state) {
+static void animation(enum game_state_t state) {
 	int row, colomn;
 	free_areas();
 	area = (int*)calloc(PLAYGROUND_COLOMNS * PLAYGROUND_ROWS, sizeof(int));
@@ -45,7 +45,7 @@ static void animation(game_state_t state) {
 	free_areas();
 }
 
-static void pre_game_pause() {
+static void pre_game_pause(void) {
 	SDL_Event event;
 	int working = 1;
 	while (working) {
@@ -62,7 +62,7 @@ static void pre_game_pause() {
 	}
 }
 
-static void game_pause() {
+static void game_pause(void) {
 	SDL_Event event;
 	int working = 1;
 	set_pause_text(TEXT_SHOW_ON);
@@ -84,7 +84,7 @@ static void game_pause() {
 	set_pause_text(TEXT_SHOW_OFF);
 }
 
-int game_play() {
+int game_play(void) {
 	SDL_Event event;
 	int working = 1;
 	int score;

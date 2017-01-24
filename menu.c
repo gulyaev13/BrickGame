@@ -10,28 +10,28 @@
 #include "menu.h"
 #include "app_window.h"
 
-typedef struct menuelement_t {
+struct menuelement_t {
 	const int* menu_image;
 	int hi_score;
 	int(*init)(int**, int**);
 	int(*next_step)(int* const, int* const, const SDL_Keycode* const);
-	/*return score or -1 if gameover*/
-} menuelement_t;
+	/*return score or -1 if gameover and 0 if pre-game pause(lost lives)*/
+};
 
-typedef struct menu_t {
+struct menu_t {
 	int count;
 	int capacity;
 	int choice;
 	int speed;
-	menuelement_t *menuelement;
-} menu_t;
+	struct menuelement_t *menuelement;
+};
 
 
 #define MAX_SPEED 9
 #define MIN_SPEED 0
 #define MAX_HI_SCORE 999999
 
-static menu_t menu;
+static struct menu_t menu;
 
 static void add_menu_item(const int* menu_image, int hi_score, int(*init)(int**, int**), int(*next_step)(int* const, int* const, const SDL_Keycode* const)) {
 	int working = 1;
@@ -45,7 +45,7 @@ static void add_menu_item(const int* menu_image, int hi_score, int(*init)(int**,
 			working = 0;
 		}
 		else {
-			if ((menu.menuelement = (menuelement_t*)realloc(menu.menuelement, sizeof(menuelement_t) * (menu.capacity + 1))) == NULL) {
+			if ((menu.menuelement = (struct menuelement_t*)realloc(menu.menuelement, sizeof(struct menuelement_t) * (menu.capacity + 1))) == NULL) {
 				printf("Failed memory location!\n");
 				break;
 			}
@@ -54,19 +54,19 @@ static void add_menu_item(const int* menu_image, int hi_score, int(*init)(int**,
 	}
 }
 
-int init_menu() {
+int init_menu(void) {
 	menu.capacity = 2;
 	menu.count = 0;
 	menu.choice = 0;
 	menu.speed = 0;
-	if ((menu.menuelement = (menuelement_t*)malloc(sizeof(menuelement_t) * 2)) == NULL) return INIT_MENU_ERROR;
+	if ((menu.menuelement = (struct menuelement_t*)malloc(sizeof(struct menuelement_t) * 2)) == NULL) return INIT_MENU_ERROR;
 	add_menu_item(menu_image_snake, 0, init_snake, next_step_snake);
 	add_menu_item(menu_image_galaxy, 0, init_galaxy, next_step_galaxy);
 	add_menu_item(menu_image_duck, 0, init_duck, next_step_duck); 
 	return INIT_MENU_OK;
 }
 
-void choose_menu_item() {
+void choose_menu_item(void) {
 	SDL_Event event;
 	int working = 1;
 	render(menu.menuelement[menu.choice].menu_image, NULL);
@@ -104,7 +104,7 @@ void choose_menu_item() {
 			render(menu.menuelement[menu.choice].menu_image, NULL);
 	}
 }
-void free_menu() {
+void free_menu(void) {
 	free(menu.menuelement);
 }
 
@@ -116,7 +116,7 @@ int game_next_step(int* const area, int* const info_blocs, const SDL_Keycode* co
 	return menu.menuelement[menu.choice].next_step(area, info_blocs, key_code);
 }
 
-int get_speed() {
+int get_speed(void) {
 	return menu.speed;
 }
 
@@ -124,7 +124,7 @@ void set_speed(int new_speed) {
 	menu.speed = (new_speed > MAX_SPEED) ? MAX_SPEED : (new_speed < MIN_SPEED ? MIN_SPEED : new_speed);
 }
 
-int get_hi_score() {
+int get_hi_score(void) {
 	return menu.menuelement[menu.choice].hi_score;
 }
 

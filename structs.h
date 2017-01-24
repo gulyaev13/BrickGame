@@ -1,13 +1,13 @@
 #pragma once
 #ifndef STRUCTS_H_INCLUDED
 #define STRUCTS_H_INCLUDED
-typedef struct {
+struct coordinates_t {
 	int x;
 	int y;
-} coordinates_t;
+};
 
-typedef enum {
+enum horizontal_move_t {
 	LEFT = -1,
 	RIGHT = 1
-} horizontal_move_t;
+};
 #endif

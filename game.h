@@ -2,7 +2,7 @@
 #ifndef GAME_H_INCLUDED
 #define GAME_H_INCLUDED
 
-int game_play();
+int game_play(void);
 
-void free_areas();
+void free_areas(void);
 #endif

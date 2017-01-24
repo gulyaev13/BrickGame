@@ -19,7 +19,7 @@
 #define SURVIVE_STONE_LINE 100
 #define SURVIVE_STONE_LINE_BONUS 50
 
-static coordinates_t spaceship;
+static struct coordinates_t spaceship;
 static int stone_move_count;
 static int rocket_send_count;
 static int score;
@@ -57,8 +57,8 @@ static void send_rocket(int* const area) {
 	area[(spaceship.y - 1) * PLAYGROUND_COLOMNS + spaceship.x] += ROCKET;
 }
 
-static void move_spaceship(int* const area, horizontal_move_t move_derection) {
-	coordinates_t destination;
+static void move_spaceship(int* const area, enum horizontal_move_t move_derection) {
+	struct coordinates_t destination;
 	destination.x = spaceship.x + move_derection;
 	destination.y = spaceship.y;
 	if (!(destination.x < 0 || destination.x >= PLAYGROUND_COLOMNS)) {

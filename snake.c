@@ -15,15 +15,15 @@
 #define EAT_CHERRY_BONUS 50
 
 
-typedef enum {
+enum step_state_t {
 	STEP_FAILED = 0,
 	STEP_TRUE,
 	EAT_CHERRY
-} step_state_t;
+};
 
-static coordinates_t snake_head;
-static coordinates_t direction;
-static coordinates_t new_direction;
+static struct coordinates_t snake_head;
+static struct coordinates_t direction;
+static struct coordinates_t new_direction;
 static int lives;
 static int snake_length;
 static int score;
@@ -54,31 +54,31 @@ static void create_cherry(int* const area) {
 	}
 }
 
-static coordinates_t coordinates_sum(coordinates_t a, coordinates_t b) {
-	coordinates_t c;
+static struct coordinates_t coordinates_sum(struct coordinates_t a, struct coordinates_t b) {
+	struct coordinates_t c;
 	c.x = a.x + b.x;
 	c.y = a.y + b.y;
 	return c;
 }
 
-static int is_out_of_playground(coordinates_t a) {
+static int is_out_of_playground(struct coordinates_t a) {
 	if (a.x < 0 || a.x >= PLAYGROUND_COLOMNS) return 1;
 	if (a.y < 0 || a.y >= PLAYGROUND_ROWS) return 1;
 	return 0;
 }
 
-static int is_eat_itself(coordinates_t a, int* const area) {
+static int is_eat_itself(struct coordinates_t a, int* const area) {
 	if (area[a.y * PLAYGROUND_COLOMNS + a.x] > 0) return 1;
 	return 0;
 }
 
-static int is_eat_cherry(coordinates_t a, int* const area) {
+static int is_eat_cherry(struct coordinates_t a, int* const area) {
 	if (area[a.y * PLAYGROUND_COLOMNS + a.x] < 0) return 1;
 	return 0;
 }
 
 static int step(int* const area) {
-	coordinates_t destination = coordinates_sum(snake_head, direction);
+	struct coordinates_t destination = coordinates_sum(snake_head, direction);
 	if (is_out_of_playground(destination)) return STEP_FAILED;
 	if (is_eat_itself(destination, area)) return STEP_FAILED;
 	snake_head = destination;
@@ -100,7 +100,7 @@ static void move_snake(int* const area) {
 	}
 }
 
-static int is_not_inverse(coordinates_t a, coordinates_t b) {
+static int is_not_inverse(struct coordinates_t a, struct coordinates_t b) {
 	/*if derection is inverse return 0*/
 	return (a.x + b.x) || (a.y + b.y);
 }
@@ -132,7 +132,7 @@ static void re_init_snake(int lives_num, int* const area, int* const info_blocs)
 }
 
 int next_step_snake(int* const area, int* const info_blocs, const SDL_Keycode* const key_code) {
-	step_state_t step_state;
+	enum step_state_t step_state;
 	new_direction.x = 0;
 	new_direction.y = 0;
 	if (key_code != NULL) {
