@@ -1,4 +1,3 @@
-#pragma once
 #ifndef APP_WINDOW_H_INCLUDED
 #define APP_WINDOW_H_INCLUDED
 

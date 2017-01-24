@@ -1,4 +1,3 @@
-#pragma once
 #ifndef GALAXY_H_INCLUDED
 #define GALAXY_H_INCLUDED
 const int menu_image_galaxy[200] = {

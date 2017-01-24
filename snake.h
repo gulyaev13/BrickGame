@@ -1,4 +1,3 @@
-#pragma once
 #ifndef SNAKE_H_INCLUDED
 #define SNAKE_H_INCLUDED
 const int menu_image_snake[200] = {

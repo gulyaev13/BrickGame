@@ -1,4 +1,3 @@
-#pragma once
 #ifndef DUCK_H_INCLUDED
 #define DUCK_H_INCLUDED
 #include "SDL2/SDL.h"
